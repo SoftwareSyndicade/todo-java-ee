@@ -1,4 +1,4 @@
-package com.todo.todo;
+package com.todo;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
