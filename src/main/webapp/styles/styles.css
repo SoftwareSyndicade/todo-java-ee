@@ -1,0 +1,15 @@
+html, body{
+    height: 100%;
+}
+
+.max-supported-width{
+    max-width: 1440px;
+}
+
+.padding1015{
+    padding: 10px 15px;
+}
+
+.padding2030{
+    padding: 20px 30px;
+}
