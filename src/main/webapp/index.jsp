@@ -19,6 +19,10 @@
     <script>
 
         $(document).ready(function(){
+            loadFolders();
+        })
+
+        function loadFolders(){
             $.ajax({
                 url:'/todo/folder',
                 method: 'GET',
@@ -28,12 +32,38 @@
 
                         if(folders.length == 0){
                             // show no folders illustration
+                            $('.stage').empty()
                             $('.stage').append($('template#no-folder-wrapper').html())
+                        }
+                        else{
+                            $('.stage').empty()
+                            let foldersTable = $($('template#todo-folders').html())
+
+                            $(folders).each(function (index, folder){
+                                let row = $(document.createElement('tr'))
+
+                                let nameCell = $(document.createElement('td'))
+                                nameCell.text(folder.name)
+
+                                let descriptionCell = $(document.createElement('td'))
+                                descriptionCell.text(folder.description)
+
+                                let createdonCell = $(document.createElement('td'))
+                                createdonCell.text(folder.created_ON)
+
+                                row.append(nameCell)
+                                row.append(descriptionCell)
+                                row.append(createdonCell)
+                                foldersTable.find('tbody').append(row)
+                            });
+
+
+                            $('.stage').append(foldersTable)
                         }
                     }
                 }
             })
-        })
+        }
 
         function createFolder(){
             $('.stage').empty()
@@ -67,6 +97,7 @@
                     <textarea type="text" class="form-control" id="txt-folder-description" name="txt-folder-description"></textarea>
                 </div>
                 <div class="col-12 text-end p-2">
+                    <button class="btn" type="button" onclick="loadFolders()">Cancel</button>
                     <button class="btn btn-primary" type="button" onclick="saveFolder()">Save</button>
                 </div>
             </div>
@@ -75,9 +106,29 @@
     <template id="no-folder-wrapper">
         <div class="text-center no-folder-wrapper">
             <img src="assets/empty.svg">
-            <h3>No todo folder found.</h3>
+            <h3>No TODO folder found.</h3>
             <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
         </div>
+    </template>
+    <template id="todo-folders">
+        <div class="padding2030 todo-folders">
+            <div class="text-end p-2">
+                <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
+            </div>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="width: 25%">Name</th>
+                    <th style="width: 50%">Description</th>
+                    <th style="width: 25%">Created On</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
     </template>
 </body>
 </html>

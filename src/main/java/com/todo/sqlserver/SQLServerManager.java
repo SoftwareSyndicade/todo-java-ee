@@ -8,6 +8,7 @@ import java.sql.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SQLServerManager {
 
@@ -21,6 +22,7 @@ public class SQLServerManager {
                         setID(rs.getInt("ID"));
                         setNAME(rs.getString("NAME"));
                         setDESCRIPTION(rs.getString("DESCRIPTION"));
+                        setCREATED_ON(rs.getTimestamp("CREATED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
                     }});
                 }
             }

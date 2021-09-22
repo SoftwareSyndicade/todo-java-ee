@@ -25,7 +25,7 @@ dependencies {
     compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
     implementation group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '9.4.0.jre11'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
-
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.5'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

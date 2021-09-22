@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 public class TodoFolder {
     private int ID;
     private String NAME;
     private String DESCRIPTION;
-    private Instant CREATED_ON;
+    private ZonedDateTime CREATED_ON;
 
     public int getID() {
         return ID;
@@ -36,11 +37,11 @@ public class TodoFolder {
         this.DESCRIPTION = DESCRIPTION;
     }
 
-    public Instant getCREATED_ON() {
+    public ZonedDateTime getCREATED_ON() {
         return CREATED_ON;
     }
 
-    public void setCREATED_ON(Instant CREATED_ON) {
+    public void setCREATED_ON(ZonedDateTime CREATED_ON) {
         this.CREATED_ON = CREATED_ON;
     }
 

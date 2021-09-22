@@ -1,6 +1,9 @@
 package com.todo.servlets;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.todo.sqlserver.SQLServerManager;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -16,13 +19,22 @@ import java.util.List;
 @WebServlet(name = "TodoFolder", value = "/folder")
 public class TodoFolder extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         // load all folders.
         response.setContentType("text/html");
         SQLServerManager manager = new SQLServerManager();
         List<com.todo.datamodels.TodoFolder> folders = new ArrayList<>();
         try {
             folders = manager.fetchTodoFolders();
+
+            PrintWriter out = response.getWriter();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+            var test = mapper.writeValueAsString(folders);
+            out.println(mapper.writeValueAsString(folders));
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -35,11 +47,13 @@ public class TodoFolder extends HttpServlet {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        PrintWriter out = response.getWriter();
-        ObjectMapper mapper = new ObjectMapper();
-        out.println(mapper.writeValueAsString(folders));
+
     }
 
     @Override
