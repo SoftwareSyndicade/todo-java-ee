@@ -24,20 +24,22 @@
         function createFolder(){
             $('.stage').empty()
             $('.stage').append($('template#create-folder').html())
+        }
 
-
+        function saveFolder(){
             $.ajax({
                 url:'/todo/folder',
                 method: 'POST',
+                data: $('.create-folder').serialize(),
                 success: function (data){
-
+                    alert(data)
                 }
             })
         }
     </script>
 
     <template id="create-folder">
-        <form class="padding2030 container-fluid" style="width: 400px">
+        <form class="padding2030 container-fluid create-folder" style="width: 400px">
             <div class="row">
                 <div class="col-12 mb-2">
                     <h3>Create folder</h3>
@@ -51,7 +53,7 @@
                     <textarea type="text" class="form-control" id="txt-folder-description" name="txt-folder-description"></textarea>
                 </div>
                 <div class="col-12 text-end p-2">
-                    <button class="btn btn-primary">Save</button>
+                    <button class="btn btn-primary" type="button" onclick="saveFolder()">Save</button>
                 </div>
             </div>
         </form>

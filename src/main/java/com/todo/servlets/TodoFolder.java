@@ -18,11 +18,12 @@ public class TodoFolder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        // Hello
+//        // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
-        out.println("<h1>test</h1>");
+        out.println("<h1>"+ request.getParameter("txt-folder-name") +"</h1>");
         out.println("</body></html>");
+
     }
 
     @Override
