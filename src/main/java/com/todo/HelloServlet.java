@@ -33,7 +33,7 @@ public class HelloServlet extends HttpServlet {
 
             SQLServerManager manager = new SQLServerManager();
             manager.fetchTodoFolders().forEach(folder -> {
-                System.out.println(folder.test());
+//                System.out.println(folder.test());
             });
 
         } catch (InstantiationException e) {

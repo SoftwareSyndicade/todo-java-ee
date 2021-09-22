@@ -5,6 +5,7 @@ import com.todo.properties.MSSqlServerProps;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,23 @@ public class SQLServerManager {
             }
         }
         return folders;
+    }
+
+    public boolean saveTodoFolder(TodoFolder folder) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
+        boolean isSaved = false;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        int INDEX = 0;
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.INSERT_TODO_FOLDERS)){
+                ps.setString(++INDEX,folder.getNAME());
+                ps.setString(++INDEX, folder.getDESCRIPTION());
+                ps.setTimestamp(++INDEX, Timestamp.from(Instant.now()));
+
+                isSaved = ps.executeUpdate() > 0;
+            }
+        }
+
+        return isSaved;
     }
 
 

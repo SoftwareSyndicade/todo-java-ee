@@ -3,12 +3,14 @@ package com.todo.datamodels;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.Instant;
 import java.util.Objects;
 
 public class TodoFolder {
     private int ID;
     private String NAME;
     private String DESCRIPTION;
+    private Instant CREATED_ON;
 
     public int getID() {
         return ID;
@@ -34,6 +36,14 @@ public class TodoFolder {
         this.DESCRIPTION = DESCRIPTION;
     }
 
+    public Instant getCREATED_ON() {
+        return CREATED_ON;
+    }
+
+    public void setCREATED_ON(Instant CREATED_ON) {
+        this.CREATED_ON = CREATED_ON;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,15 +55,5 @@ public class TodoFolder {
     @Override
     public int hashCode() {
         return Objects.hash(ID);
-    }
-
-    public String test(){
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 }
