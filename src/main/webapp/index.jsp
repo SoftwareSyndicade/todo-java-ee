@@ -37,28 +37,23 @@
                         }
                         else{
                             $('.stage').empty()
-                            let foldersTable = $($('template#todo-folders').html())
+                            // let dashboardStage = $($('template#todo-dashboard').html()).find('.dashboard-stage .row')
+
+                            let dashboard = $($('template#todo-dashboard').html());
+                            let dashboardStage = dashboard.find('.dashboard-stage')
+                            let dashboardStageRow = dashboardStage.find('.row')
 
                             $(folders).each(function (index, folder){
-                                let row = $(document.createElement('tr'))
+                                var todoFolder = $($('template#todo-folder').html()).clone();
 
-                                let nameCell = $(document.createElement('td'))
-                                nameCell.text(folder.name)
+                                todoFolder.find('#folder-name').text(folder.name)
+                                todoFolder.find('#folder-description').text(folder.description)
 
-                                let descriptionCell = $(document.createElement('td'))
-                                descriptionCell.text(folder.description)
-
-                                let createdonCell = $(document.createElement('td'))
-                                createdonCell.text(folder.created_ON)
-
-                                row.append(nameCell)
-                                row.append(descriptionCell)
-                                row.append(createdonCell)
-                                foldersTable.find('tbody').append(row)
+                                dashboardStageRow.append(todoFolder)
                             });
 
-
-                            $('.stage').append(foldersTable)
+                            dashboardStage.append(dashboardStageRow)
+                            $('.stage').append(dashboard)
                         }
                     }
                 }
@@ -110,25 +105,48 @@
             <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
         </div>
     </template>
-    <template id="todo-folders">
-        <div class="padding2030 todo-folders">
-            <div class="text-end p-2">
+    <template id="todo-dashboard">
+        <div class="todo-dashboard">
+            <div class="text-end">
                 <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
+                <hr/>
             </div>
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                <tr>
-                    <th style="width: 25%">Name</th>
-                    <th style="width: 50%">Description</th>
-                    <th style="width: 25%">Created On</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="container-fluid dashboard-stage">
+                <div class="row">
 
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
+    </template>
 
+    <template id="todo-folder">
+        <div class="col-3 p-2">
+            <div class="todo-folder">
+                <div class="todo-folder-status">
+                    <label class="small">Updated: Today</label>
+                </div>
+                <div class="todo-options">
+                    <img src="assets/cog-solid.svg">
+                </div>
+                <div class="folder-icon">
+                    <img src="assets/folder-open-solid.svg">
+                </div>
+                <div class="text-center">
+                    <h3 id="folder-name">Personal TODO's</h3>
+                    <span class="small" id="folder-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+                </div>
+                <div class="container-fluid p-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn w-100">Cancel</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-primary w-100">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
 </body>
 </html>

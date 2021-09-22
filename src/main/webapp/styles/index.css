@@ -3,6 +3,8 @@
     height: 100%;
     border-radius: 0.25rem;
     position: relative;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .no-folder-wrapper{
@@ -11,4 +13,42 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.todo-dashboard{
+    padding: 1rem;
+}
+
+.todo-folder{
+    border-radius: 0.25rem;
+    width:100%;
+    border: 1px solid #ccc;
+    padding: 20px 30px;
+    position: relative;
+}
+
+.todo-folder-status{
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    white-space: nowrap;
+}
+
+.todo-options{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.folder-icon{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid;
+    padding: 1rem;
+    margin:auto;
+    margin-top: 0.5rem;
 }
