@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>TODO</title>
     <link href="styles/bootstrap.min.css" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet">
     <link href="styles/index.css" rel="stylesheet">
@@ -22,6 +22,10 @@
     <script src="scripts/bootstrap.min.js"></script>
     <script>
         function createFolder(){
+            $('.stage').empty()
+            $('.stage').append($('template#create-folder').html())
+
+
             $.ajax({
                 url:'/todo/folder',
                 method: 'POST',
@@ -31,5 +35,26 @@
             })
         }
     </script>
+
+    <template id="create-folder">
+        <form class="padding2030 container-fluid" style="width: 400px">
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <h3>Create folder</h3>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="txt-folder-name">Folder name</label>
+                    <input type="text" class="form-control" id="txt-folder-name" name="txt-folder-name">
+                </div>
+                <div class="col-12 form-group">
+                    <label for="txt-folder-description">Description</label>
+                    <textarea type="text" class="form-control" id="txt-folder-description" name="txt-folder-description"></textarea>
+                </div>
+                <div class="col-12 text-end p-2">
+                    <button class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </template>
 </body>
 </html>
