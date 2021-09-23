@@ -44,7 +44,7 @@
                             let dashboardStageRow = dashboardStage.find('.row')
 
                             $(folders).each(function (index, folder){
-                                var todoFolder = $($('template#todo-folder').html()).clone();
+                                let todoFolder = $($('template#todo-folder').html()).clone();
 
                                 todoFolder.find('#folder-name').text(folder.name)
                                 todoFolder.find('#folder-description').text(folder.description)
@@ -66,6 +66,10 @@
         }
 
         function saveFolder(){
+
+            if(!isFolderValid())
+                return false
+
             $.ajax({
                 url:'/todo/folder',
                 method: 'POST',
@@ -77,6 +81,19 @@
                 }
             })
         }
+
+        function isFolderValid(){
+            // validate folder name
+            let folderName = $('#txt-folder-name').val()
+
+            if(folderName === "" || folderName === undefined)
+            {
+                alert("Please enter folder name.")
+                return false
+            }
+
+            return true
+        }
     </script>
 
     <template id="create-folder">
@@ -87,7 +104,10 @@
                 </div>
                 <div class="col-12 form-group">
                     <label for="txt-folder-name">Folder name</label>
-                    <input type="text" class="form-control" id="txt-folder-name" name="txt-folder-name">
+                    <input type="text" class="form-control" id="txt-folder-name" name="txt-folder-name" required>
+                    <div class="invalid-feedback">
+                        Please choose a username.
+                    </div>
                 </div>
                 <div class="col-12 form-group">
                     <label for="txt-folder-description">Description</label>
