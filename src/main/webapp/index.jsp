@@ -48,7 +48,19 @@
 
                                 todoFolder.find('#folder-name').text(folder.name)
                                 todoFolder.find('#folder-description').text(folder.description)
-
+                                todoFolder.find('#action-todo-folder-delete button').click(function (){
+                                    $.ajax({
+                                        url:'/todo/folder',
+                                        method: 'DELETE',
+                                        contentType: "application/json; charset=utf-8",
+                                        data: 'folder-id=' + folder.id,
+                                        success: function (data){
+                                            if(data){
+                                                loadFolders()
+                                            }
+                                        }
+                                    })
+                                })
                                 dashboardStageRow.append(todoFolder)
                             });
 
@@ -93,6 +105,10 @@
             }
 
             return true
+        }
+
+        function deleteFolder(){
+
         }
     </script>
 
@@ -159,8 +175,8 @@
                 </div>
                 <div class="container-fluid p-2">
                     <div class="row">
-                        <div class="col-6">
-                            <button class="btn w-100">Cancel</button>
+                        <div class="col-6" id="action-todo-folder-delete">
+                            <button class="btn w-100">Delete</button>
                         </div>
                         <div class="col-6">
                             <button class="btn btn-primary w-100">View</button>
