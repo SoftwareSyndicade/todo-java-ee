@@ -25,12 +25,13 @@
         function loadFolders(){
 
             let options = {}
-            options.url = '/todo/folder'
+            options.url = '/todo-app/folder'
             options.method = 'GET'
             options.callbackMethod = loadFoldersSuccess
 
             sendRequest(options)
         }
+
 
         function loadFoldersSuccess(data){
             if(data !== "" || data !== undefined){
@@ -56,7 +57,7 @@
                         todoFolder.find('#action-todo-folder-delete button').click(function (){
 
                             let options = {}
-                            options.url = '/todo/folder'
+                            options.url = '/todo-app/folder'
                             options.method = 'DELETE'
                             options.data =  'folder-id=' + folder.id,
                             options.callbackMethod = loadFolders
@@ -65,7 +66,13 @@
 
                         })
                         todoFolder.find('#action-todo-folder-open button').click(function (){
+                            let options = {}
+                            options.url = '/todo-app/todo'
+                            options.method = 'GET'
+                            options.data =  'folder-id=' + folder.id,
+                            options.callbackMethod = loadFolders
 
+                            sendRequest(options)
                         })
                         dashboardStageRow.append(todoFolder)
                     });
@@ -87,7 +94,7 @@
                 return false
 
             let options = {}
-            options.url = '/todo/folder'
+            options.url = '/todo-app/folder'
             options.method = 'POST'
             options.data = $('.create-folder').serialize()
             options.callbackMethod = saveFolderSuccess
@@ -138,9 +145,11 @@
             })
         }
 
-        function openTodoDashboard(){
-
+        function createTODO(){
+            $('.stage').empty()
+            $('.stage').append($('template#create-todo').html())
         }
+
 
     </script>
 
@@ -170,6 +179,13 @@
     </template>
     <template id="no-folder-wrapper">
         <div class="text-center no-folder-wrapper">
+            <img src="assets/empty.svg">
+            <h3>No TODO folder found.</h3>
+            <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
+        </div>
+    </template>
+    <template id="no-todo-wrapper">
+        <div class="text-center no-todo-wrapper">
             <img src="assets/empty.svg">
             <h3>No TODO folder found.</h3>
             <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
@@ -219,8 +235,32 @@
     </template>
     <template id="todo-dashboard">
         <div class="todo-dashboard">
-
+            <div class="text-end">
+                <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
+                <hr/>
+            </div>
         </div>
+    </template>
+    <template id="create-todo">
+        <form class="padding2030 container-fluid create-todo" style="width: 400px">
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <h3>Create TODO</h3>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="txt-folder-name">TODO name</label>
+                    <input type="text" class="form-control" id="txt-todo-name" name="txt-folder-name" required>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="txt-folder-description">Description</label>
+                    <textarea type="text" class="form-control" id="txt-TODO-description" name="txt-folder-description"></textarea>
+                </div>
+                <div class="col-12 text-end p-2">
+                    <button class="btn" type="button" onclick="loadTODOs()">Cancel</button>
+                    <button class="btn btn-primary" type="button" onclick="saveFolder()">Save</button>
+                </div>
+            </div>
+        </form>
     </template>
 </body>
 </html>

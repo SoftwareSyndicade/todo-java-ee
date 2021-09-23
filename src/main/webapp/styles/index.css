@@ -7,7 +7,7 @@
     overflow-y: auto;
 }
 
-.no-folder-wrapper{
+.no-folder-wrapper, .no-todo-wrapper{
     width: 500px;
     position: absolute;
     top: 50%;
