@@ -15,7 +15,7 @@
     transform: translate(-50%, -50%);
 }
 
-.todo-dashboard{
+.todo-folder-dashboard, .todo-dashboard{
     padding: 1rem;
 }
 

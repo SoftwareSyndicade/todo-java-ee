@@ -23,53 +23,57 @@
         })
 
         function loadFolders(){
-            $.ajax({
-                url:'/todo/folder',
-                method: 'GET',
-                success: function (data){
-                    if(data !== "" || data !== undefined){
-                        let folders = JSON.parse(data)
 
-                        if(folders.length == 0){
-                            // show no folders illustration
-                            $('.stage').empty()
-                            $('.stage').append($('template#no-folder-wrapper').html())
-                        }
-                        else{
-                            $('.stage').empty()
-                            // let dashboardStage = $($('template#todo-dashboard').html()).find('.dashboard-stage .row')
+            let options = {}
+            options.url = '/todo/folder'
+            options.method = 'GET'
+            options.callbackMethod = loadFoldersSuccess
 
-                            let dashboard = $($('template#todo-dashboard').html());
-                            let dashboardStage = dashboard.find('.dashboard-stage')
-                            let dashboardStageRow = dashboardStage.find('.row')
+            sendRequest(options)
+        }
 
-                            $(folders).each(function (index, folder){
-                                let todoFolder = $($('template#todo-folder').html()).clone();
+        function loadFoldersSuccess(data){
+            if(data !== "" || data !== undefined){
+                let folders = JSON.parse(data)
 
-                                todoFolder.find('#folder-name').text(folder.name)
-                                todoFolder.find('#folder-description').text(folder.description)
-                                todoFolder.find('#action-todo-folder-delete button').click(function (){
-                                    $.ajax({
-                                        url:'/todo/folder',
-                                        method: 'DELETE',
-                                        contentType: "application/json; charset=utf-8",
-                                        data: 'folder-id=' + folder.id,
-                                        success: function (data){
-                                            if(data){
-                                                loadFolders()
-                                            }
-                                        }
-                                    })
-                                })
-                                dashboardStageRow.append(todoFolder)
-                            });
-
-                            dashboardStage.append(dashboardStageRow)
-                            $('.stage').append(dashboard)
-                        }
-                    }
+                if(folders.length == 0){
+                    // show no folders illustration
+                    $('.stage').empty()
+                    $('.stage').append($('template#no-folder-wrapper').html())
                 }
-            })
+                else{
+                    $('.stage').empty()
+
+                    let dashboard = $($('template#todo-folder-dashboard').html());
+                    let dashboardStage = dashboard.find('.dashboard-stage')
+                    let dashboardStageRow = dashboardStage.find('.row')
+
+                    $(folders).each(function (index, folder){
+                        let todoFolder = $($('template#todo-folder').html()).clone();
+
+                        todoFolder.find('#folder-name').text(folder.name)
+                        todoFolder.find('#folder-description').text(folder.description)
+                        todoFolder.find('#action-todo-folder-delete button').click(function (){
+
+                            let options = {}
+                            options.url = '/todo/folder'
+                            options.method = 'DELETE'
+                            options.data =  'folder-id=' + folder.id,
+                            options.callbackMethod = loadFolders
+
+                            sendRequest(options)
+
+                        })
+                        todoFolder.find('#action-todo-folder-open button').click(function (){
+
+                        })
+                        dashboardStageRow.append(todoFolder)
+                    });
+
+                    dashboardStage.append(dashboardStageRow)
+                    $('.stage').append(dashboard)
+                }
+            }
         }
 
         function createFolder(){
@@ -82,16 +86,22 @@
             if(!isFolderValid())
                 return false
 
-            $.ajax({
-                url:'/todo/folder',
-                method: 'POST',
-                data: $('.create-folder').serialize(),
-                success: function (data){
-                    if(data){
-                        loadFolders()
-                    }
-                }
-            })
+            let options = {}
+            options.url = '/todo/folder'
+            options.method = 'POST'
+            options.data = $('.create-folder').serialize()
+            options.callbackMethod = saveFolderSuccess
+
+            sendRequest(options)
+        }
+
+        function saveFolderSuccess(data){
+
+            let response = JSON.parse(data)
+
+            if(response){
+                loadFolders()
+            }
         }
 
         function isFolderValid(){
@@ -107,9 +117,31 @@
             return true
         }
 
-        function deleteFolder(){
+        function sendRequest(options){
+            /**
+             * OPTIONS:
+             * url
+             * method
+             * data
+             * callbackMethod
+             */
+
+            if(options === undefined)
+                return false
+
+            $.ajax({
+                url: options.url,
+                // contentType: "application/json; charset=utf-8",
+                method: options.method,
+                data: options.data,
+                success: options.callbackMethod
+            })
+        }
+
+        function openTodoDashboard(){
 
         }
+
     </script>
 
     <template id="create-folder">
@@ -143,8 +175,8 @@
             <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
         </div>
     </template>
-    <template id="todo-dashboard">
-        <div class="todo-dashboard">
+    <template id="todo-folder-dashboard">
+        <div class="todo-folder-dashboard">
             <div class="text-end">
                 <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
                 <hr/>
@@ -156,7 +188,6 @@
             </div>
         </div>
     </template>
-
     <template id="todo-folder">
         <div class="col-3 p-2">
             <div class="todo-folder">
@@ -178,12 +209,17 @@
                         <div class="col-6" id="action-todo-folder-delete">
                             <button class="btn w-100">Delete</button>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" id="action-todo-folder-open">
                             <button class="btn btn-primary w-100">View</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </template>
+    <template id="todo-dashboard">
+        <div class="todo-dashboard">
+
         </div>
     </template>
 </body>

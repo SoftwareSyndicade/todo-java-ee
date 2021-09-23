@@ -95,7 +95,8 @@ public class TodoFolder extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         boolean isDeleted = false;
-        int folderID = Integer.parseInt(getParameters(req).get("folder-id"));
+        var id = getParameters(req).get("folder-id");
+        int folderID = Integer.parseInt(id);
         SQLServerManager manager = new SQLServerManager();
         try {
             isDeleted = manager.deleteTodoFolder(folderID);
