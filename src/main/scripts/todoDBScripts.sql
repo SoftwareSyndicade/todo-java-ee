@@ -1,0 +1,10 @@
+create DATABASE todoDB
+
+create TABLE TODO_FOLDERS
+(
+    ID int IDENTITY(1,1),
+    NAME VARCHAR(max) not null,
+    DESCRIPTION VARCHAR(MAX),
+    CREATED_ON DATETIME not null,
+    CONSTRAINT PK_FOLDER_ID PRIMARY KEY (ID)
+)
