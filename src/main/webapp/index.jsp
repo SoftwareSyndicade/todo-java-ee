@@ -71,7 +71,9 @@
                 method: 'POST',
                 data: $('.create-folder').serialize(),
                 success: function (data){
-                    alert(data)
+                    if(data){
+                        loadFolders()
+                    }
                 }
             })
         }
