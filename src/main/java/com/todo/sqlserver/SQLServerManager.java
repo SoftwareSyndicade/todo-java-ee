@@ -36,9 +36,13 @@ public class SQLServerManager {
         int INDEX = 0;
         try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
             try(PreparedStatement ps = conn.prepareStatement(SQLQueries.INSERT_TODO_FOLDERS)){
+
+                Timestamp timestamp = Timestamp.from(Instant.now());
+
                 ps.setString(++INDEX,folder.getNAME());
                 ps.setString(++INDEX, folder.getDESCRIPTION());
-                ps.setTimestamp(++INDEX, Timestamp.from(Instant.now()));
+                ps.setTimestamp(++INDEX, timestamp);
+                ps.setTimestamp(++INDEX, timestamp);
 
                 isSaved = ps.executeUpdate() > 0;
             }
@@ -61,5 +65,8 @@ public class SQLServerManager {
         return idDeleted;
     }
 
+    public void fetchTodos(int folderID){
+
+    }
 
 }
