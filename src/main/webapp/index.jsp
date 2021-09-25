@@ -18,6 +18,7 @@
     <script src="scripts/bootstrap.min.js"></script>
     <script>
 
+        var selectedFolder = 0
         $(document).ready(function(){
             loadFolders();
         })
@@ -66,6 +67,7 @@
 
                         })
                         todoFolder.find('#action-todo-folder-open button').click(function (){
+                            selectedFolder = folder.id
                             let options = {}
                             options.url = '/todo-app/todo'
                             options.method = 'GET'
@@ -200,7 +202,7 @@
         <div class="text-center no-todo-wrapper">
             <img src="assets/todos.svg">
             <h3>No TODO's found.</h3>
-            <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
+            <button class="btn btn-primary">Create TODO</button>
         </div>
     </template>
     <template id="todo-folder-dashboard">

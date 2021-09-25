@@ -40,6 +40,12 @@ public class Todo extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int folderID = Integer.parseInt(request.getParameter("folder-id"));
+        com.todo.datamodels.Todo todo = new com.todo.datamodels.Todo(){{
+           setNAME(request.getParameter("todo-name"));
+           setDESCRIPTION(request.getParameter("todo-description"));
+           setFOLDER_ID(folderID);
+        }};
 
     }
 }
