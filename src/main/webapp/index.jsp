@@ -53,6 +53,9 @@
                     $(folders).each(function (index, folder){
                         let todoFolder = $($('template#todo-folder').html()).clone();
 
+                        let updateDays = folder.update_DAYS == 0 ? "Today" : folder.update_DAYS + " ago";
+
+                        todoFolder.find('#lbl-update-days').text('Updated: ' + updateDays)
                         todoFolder.find('#folder-name').text(folder.name)
                         todoFolder.find('#folder-description').text(folder.description)
                         todoFolder.find('#action-todo-folder-delete button').click(function (){
@@ -312,7 +315,7 @@
         <div class="col-3 p-2">
             <div class="todo-folder">
                 <div class="todo-folder-status">
-                    <label class="small">Updated: Today</label>
+                    <label class="small" id="lbl-update-days">Updated: Today</label>
                 </div>
                 <div class="todo-options">
                     <img src="assets/cog-solid.svg">

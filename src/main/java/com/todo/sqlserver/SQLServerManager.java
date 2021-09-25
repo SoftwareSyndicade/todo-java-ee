@@ -6,6 +6,7 @@ import com.todo.properties.MSSqlServerProps;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,15 @@ public class SQLServerManager {
             try(PreparedStatement ps = conn.prepareStatement(SQLQueries.FETCH_TODO_FOLDERS); ResultSet rs = ps.executeQuery()){
                 while (rs.next()){
                     folders.add(new TodoFolder(){{
+
+                        Instant modifiedON = rs.getTimestamp("CREATED_ON").toInstant();
+
                         setID(rs.getInt("ID"));
                         setNAME(rs.getString("NAME"));
                         setDESCRIPTION(rs.getString("DESCRIPTION"));
                         setCREATED_ON(rs.getTimestamp("CREATED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
+                        setUPDATE_DAYS(Duration.between(modifiedON, Instant.now()).toDays());
+                        setMODIFIED_ON(modifiedON.atZone(TimeZone.getDefault().toZoneId()));
                     }});
                 }
             }

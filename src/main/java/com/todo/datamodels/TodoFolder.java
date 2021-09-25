@@ -12,6 +12,8 @@ public class TodoFolder {
     private String NAME;
     private String DESCRIPTION;
     private ZonedDateTime CREATED_ON;
+    private ZonedDateTime MODIFIED_ON;
+    private long UPDATE_DAYS;
 
     public int getID() {
         return ID;
@@ -43,6 +45,22 @@ public class TodoFolder {
 
     public void setCREATED_ON(ZonedDateTime CREATED_ON) {
         this.CREATED_ON = CREATED_ON;
+    }
+
+    public ZonedDateTime getMODIFIED_ON() {
+        return MODIFIED_ON;
+    }
+
+    public void setMODIFIED_ON(ZonedDateTime MODIFIED_ON) {
+        this.MODIFIED_ON = MODIFIED_ON;
+    }
+
+    public long getUPDATE_DAYS() {
+        return UPDATE_DAYS;
+    }
+
+    public void setUPDATE_DAYS(long UPDATE_DAYS) {
+        this.UPDATE_DAYS = UPDATE_DAYS;
     }
 
     @Override
