@@ -109,3 +109,12 @@
     height: 30px;
     cursor: pointer
 }
+
+.complete{
+    background: #2196F3;
+    border-radius: 0.25rem;
+}
+
+.txt-strikethrough{
+    text-decoration: line-through;
+}
