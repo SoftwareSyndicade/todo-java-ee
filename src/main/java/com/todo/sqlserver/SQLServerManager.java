@@ -121,6 +121,7 @@ public class SQLServerManager {
                             setNAME(rs.getString("NAME"));
                             setDESCRIPTION(rs.getString("DESCRIPTION"));
                             setFOLDER_ID(rs.getInt("FOLDER_ID"));
+                            setIS_COMPLETE(rs.getBoolean("IS_COMPLETE"));
                             setCREATED_ON(rs.getTimestamp("CREATED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
                             setMODIFIED_ON(rs.getTimestamp("MODIFIED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
                         }});

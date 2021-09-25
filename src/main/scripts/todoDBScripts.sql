@@ -18,6 +18,7 @@ create TABLE TODOS
     CREATED_ON DATETIME not null,
     MODIFIED_ON DATETIME not null,
     FOLDER_ID int not null,
+    IS_COMPLETE bit not null default 0,
     CONSTRAINT PK_TODO_ID PRIMARY KEY (ID),
     CONSTRAINT FK_TODO_FOLDER_ID FOREIGN KEY (FOLDER_ID) references TODO_FOLDERS(ID) ON DELETE cascade
 )

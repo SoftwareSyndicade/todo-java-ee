@@ -8,6 +8,7 @@ public class Todo {
     private String NAME;
     private String DESCRIPTION;
     private int FOLDER_ID;
+    private boolean IS_COMPLETE;
     private ZonedDateTime CREATED_ON;
     private ZonedDateTime MODIFIED_ON;
 
@@ -41,6 +42,14 @@ public class Todo {
 
     public void setFOLDER_ID(int FOLDER_ID) {
         this.FOLDER_ID = FOLDER_ID;
+    }
+
+    public boolean isIS_COMPLETE() {
+        return IS_COMPLETE;
+    }
+
+    public void setIS_COMPLETE(boolean IS_COMPLETE) {
+        this.IS_COMPLETE = IS_COMPLETE;
     }
 
     public ZonedDateTime getCREATED_ON() {
