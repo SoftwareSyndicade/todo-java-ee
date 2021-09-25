@@ -76,6 +76,22 @@ public class SQLServerManager {
         return isSaved;
     }
 
+    public boolean updateTodoFolderDate(int folderID) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        boolean isUpdated = false;
+
+        int INDEX = 0;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)) {
+            try (PreparedStatement ps = conn.prepareStatement(SQLQueries.UPDATE_TODO_FOLDERS_DATE)) {
+                ps.setTimestamp(++INDEX, Timestamp.from(Instant.now()));
+                ps.setInt(++INDEX ,folderID);
+
+                isUpdated = ps.executeUpdate() > 0;
+            }
+        }
+        return isUpdated;
+    }
+
     public boolean deleteTodoFolder(int folderID) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
         boolean idDeleted = false;
         int INDEX = 0;

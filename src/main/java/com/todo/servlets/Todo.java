@@ -61,6 +61,7 @@ public class Todo extends HttpServlet {
         SQLServerManager manager = new SQLServerManager();
         try {
             isSaved = manager.saveTodo(todo);
+            isSaved = manager.updateTodoFolderDate(folderID);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -92,6 +93,7 @@ public class Todo extends HttpServlet {
 
         try {
             isDeleted = manager.deleteTodo(todoID, folderID);
+            isDeleted = manager.updateTodoFolderDate(folderID);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
