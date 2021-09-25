@@ -42,10 +42,27 @@ public class Todo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int folderID = Integer.parseInt(request.getParameter("folder-id"));
         com.todo.datamodels.Todo todo = new com.todo.datamodels.Todo(){{
-           setNAME(request.getParameter("todo-name"));
-           setDESCRIPTION(request.getParameter("todo-description"));
+           setNAME(request.getParameter("txt-todo-name"));
+           setDESCRIPTION(request.getParameter("txt-todo-description"));
            setFOLDER_ID(folderID);
         }};
+
+        SQLServerManager manager = new SQLServerManager();
+        try {
+            manager.saveTodo(todo);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

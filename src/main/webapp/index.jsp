@@ -68,13 +68,7 @@
                         })
                         todoFolder.find('#action-todo-folder-open button').click(function (){
                             selectedFolder = folder.id
-                            let options = {}
-                            options.url = '/todo-app/todo'
-                            options.method = 'GET'
-                            options.data =  'folder-id=' + folder.id,
-                            options.callbackMethod = loadTodoSuccess
-
-                            sendRequest(options)
+                            loadTodos();
                         })
                         dashboardStageRow.append(todoFolder)
                     });
@@ -83,6 +77,17 @@
                     $('.stage').append(dashboard)
                 }
             }
+        }
+
+        function loadTodos(){
+
+            let options = {}
+            options.url = '/todo-app/todo'
+            options.method = 'GET'
+            options.data =  'folder-id=' + selectedFolder,
+                options.callbackMethod = loadTodoSuccess
+
+            sendRequest(options)
         }
 
         function loadTodoSuccess(data){
@@ -116,6 +121,7 @@
             sendRequest(options)
         }
 
+
         function saveFolderSuccess(data){
 
             let response = JSON.parse(data)
@@ -136,6 +142,17 @@
             }
 
             return true
+        }
+
+        function isTodoValid(){
+            let todoName = $('#txt-todo-name').val()
+
+            if(todoName === "" || todoName === undefined){
+                alert("Please enter todo name.")
+                return false
+            }
+
+            return true;
         }
 
         function sendRequest(options){
@@ -164,6 +181,24 @@
             $('.stage').append($('template#create-todo').html())
         }
 
+        function saveTODO(){
+
+            if(!isTodoValid())
+                return false
+
+            let options = {}
+            options.url = '/todo-app/todo'
+            options.method = 'POST'
+            options.data = $('.create-todo').serialize() + '&folder-id=' + selectedFolder,
+            options.callbackMethod = saveTodoSuccess()
+
+            sendRequest(options)
+
+        }
+
+        function saveTodoSuccess(data){
+
+        }
 
     </script>
 
@@ -202,7 +237,7 @@
         <div class="text-center no-todo-wrapper">
             <img src="assets/todos.svg">
             <h3>No TODO's found.</h3>
-            <button class="btn btn-primary">Create TODO</button>
+            <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
         </div>
     </template>
     <template id="todo-folder-dashboard">
@@ -268,15 +303,15 @@
                 </div>
                 <div class="col-12 form-group">
                     <label for="txt-folder-name">TODO name</label>
-                    <input type="text" class="form-control" id="txt-todo-name" name="txt-folder-name" required>
+                    <input type="text" class="form-control" id="txt-todo-name" name="txt-todo-name" required>
                 </div>
                 <div class="col-12 form-group">
                     <label for="txt-folder-description">Description</label>
-                    <textarea type="text" class="form-control" id="txt-TODO-description" name="txt-folder-description"></textarea>
+                    <textarea type="text" class="form-control" id="txt-todo-description" name="txt-todo-description"></textarea>
                 </div>
                 <div class="col-12 text-end p-2">
-                    <button class="btn" type="button">Cancel</button>
-                    <button class="btn btn-primary" type="button">Save</button>
+                    <button class="btn" type="button" onclick="loadTodos()">Cancel</button>
+                    <button class="btn btn-primary" type="button" onclick="saveTODO()">Save</button>
                 </div>
             </div>
         </form>

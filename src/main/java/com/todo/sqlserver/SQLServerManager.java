@@ -92,4 +92,24 @@ public class SQLServerManager {
         return todos;
     }
 
+    public boolean saveTodo(Todo todo) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        boolean isSaved = false;
+        int INDEX = 0;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.INSERT_TODO)){
+                Timestamp timestamp = Timestamp.from(Instant.now());
+
+                ps.setString(++INDEX,todo.getNAME());
+                ps.setString(++INDEX, todo.getDESCRIPTION());
+                ps.setTimestamp(++INDEX, timestamp);
+                ps.setTimestamp(++INDEX, timestamp);
+                ps.setInt(++INDEX, todo.getFOLDER_ID());
+
+                isSaved = ps.executeUpdate() > 0;
+            }
+        }
+        return isSaved;
+    }
+
 }
