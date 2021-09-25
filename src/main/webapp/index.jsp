@@ -100,13 +100,15 @@
                     $('.stage').append($('template#no-todo-wrapper').html())
                 }
                 else{
-                    $('.stage').empty();
-                    let dashboard = $($('template#todo-dashboard').html());
+                    $('.stage').empty()
+                    let dashboard = $($('template#todo-dashboard').html())
+                    let folderName = dashboard.find('#lbl-folder-name')
+                    folderName.text(res.folderName)
                     let dashboardStage = dashboard.find('.dashboard-stage')
                     let dashboardStageRow = dashboardStage.find('.row')
 
                     $(res.todos).each(function (index, todo){
-                        let todoUI = $($('template#todo').html()).clone();
+                        let todoUI = $($('template#todo').html()).clone()
 
                         todoUI.find('#todo-name').text(todo.name)
                         todoUI.find('#todo-description').text(todo.description)
@@ -310,7 +312,7 @@
                 <hr/>
             </div>
             <div class="text-center padding1015">
-                <h3>Folder name</h3>
+                <h3 id="lbl-folder-name">Folder name</h3>
             </div>
             <div class="container-fluid dashboard-stage" style="max-width: 800px;">
                 <div class="row">

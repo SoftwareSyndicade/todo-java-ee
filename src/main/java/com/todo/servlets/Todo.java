@@ -3,6 +3,7 @@ package com.todo.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.todo.datamodels.TodoFolder;
 import com.todo.responsemodels.FetchTodosResponse;
 import com.todo.sqlserver.SQLServerManager;
 import jakarta.servlet.*;
@@ -26,6 +27,8 @@ public class Todo extends HttpServlet {
 
         SQLServerManager manager = new SQLServerManager();
         try {
+            TodoFolder folder =  manager.fetchTodoFolder(folderID);
+            res.setFolderName(folder.getNAME());
             res.setTodos(manager.fetchTodos(folderID));
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException | SQLException e) {
             e.printStackTrace();

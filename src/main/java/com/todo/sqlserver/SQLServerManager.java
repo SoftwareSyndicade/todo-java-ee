@@ -31,6 +31,30 @@ public class SQLServerManager {
         return folders;
     }
 
+    public TodoFolder fetchTodoFolder(int folderID) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        TodoFolder folder = null;
+        int INDEX = 0;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.FETCH_TODO_FOLDER)){
+
+                ps.setInt(++INDEX, folderID);
+                try(ResultSet rs = ps.executeQuery()){
+                    while (rs.next()){
+
+                        folder = new TodoFolder(){{
+                            setID(rs.getInt("ID"));
+                            setNAME(rs.getString("NAME"));
+                            setDESCRIPTION(rs.getString("DESCRIPTION"));
+                            setCREATED_ON(rs.getTimestamp("CREATED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
+                        }};
+                    }
+                }
+            }
+        }
+        return folder;
+    }
+
     public boolean saveTodoFolder(TodoFolder folder) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
         boolean isSaved = false;
         Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
