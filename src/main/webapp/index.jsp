@@ -356,6 +356,9 @@
                     <h5 class="m-0" id="todo-name">Todo name</h5>
                     <label class="small" id="todo-description">Description here</label>
                 </div>
+                <div class="todo-trash">
+                    <img src="assets/trash.svg" class="todo-trash-icon">
+                </div>
             </div>
         </div>
     </template>

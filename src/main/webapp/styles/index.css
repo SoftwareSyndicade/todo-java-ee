@@ -63,6 +63,10 @@
     border-radius: 0.25rem;
 }
 
+.todo:hover .todo-trash-icon{
+    display: block;
+}
+
 .todo:not(:last-of-type){
     border-bottom: 1px solid;
 }
@@ -79,6 +83,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer
+}
+
+.todo .todo-trash{
+    width: 50px;
+    position: relative
+}
+
+.todo-trash-icon{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
 }
 
 .back-button{
