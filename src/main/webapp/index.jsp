@@ -92,12 +92,29 @@
 
         function loadTodoSuccess(data){
             if(data !== "" || data !== undefined){
-                let todos = JSON.parse(data)
+                let res = JSON.parse(data)
 
-                if(todos.length == 0){
+                if(res.todos.length == 0){
                     // show no folders illustration
                     $('.stage').empty()
                     $('.stage').append($('template#no-todo-wrapper').html())
+                }
+                else{
+                    $('.stage').empty();
+                    let dashboard = $($('template#todo-dashboard').html());
+                    let dashboardStage = dashboard.find('.dashboard-stage')
+                    let dashboardStageRow = dashboardStage.find('.row')
+
+                    $(res.todos).each(function (index, todo){
+                        let todoUI = $($('template#todo').html()).clone();
+
+                        todoUI.find('#todo-name').text(todo.name)
+                        todoUI.find('#todo-description').text(todo.description)
+                        dashboardStageRow.append(todoUI)
+                    })
+
+                    dashboardStage.append(dashboardStageRow)
+                    $('.stage').append(dashboard)
                 }
             }
         }
@@ -190,14 +207,18 @@
             options.url = '/todo-app/todo'
             options.method = 'POST'
             options.data = $('.create-todo').serialize() + '&folder-id=' + selectedFolder,
-            options.callbackMethod = saveTodoSuccess()
+            options.callbackMethod = saveTodoSuccess
 
             sendRequest(options)
 
         }
 
         function saveTodoSuccess(data){
+            let response = JSON.parse(data)
 
+            if(response){
+                loadTodos()
+            }
         }
 
     </script>
@@ -288,8 +309,11 @@
                 <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
                 <hr/>
             </div>
-            <div class="container-fluid dashboard-stage">
-                <div class="row" style="max-width: 800px">
+            <div class="text-center padding1015">
+                <h3>Folder name</h3>
+            </div>
+            <div class="container-fluid dashboard-stage" style="max-width: 800px;">
+                <div class="row">
 
                 </div>
             </div>

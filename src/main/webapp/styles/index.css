@@ -56,11 +56,11 @@
 .todo{
     max-width: 800px;
     transition: all 0.2s ease-in-out;
-    border-radius: 0.25rem;
 }
 
 .todo:hover{
     background: #2196F3;
+    border-radius: 0.25rem;
 }
 
 .todo:not(:last-of-type){
