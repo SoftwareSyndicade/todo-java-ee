@@ -1,5 +1,6 @@
 package com.todo.sqlserver;
 
+import com.todo.datamodels.Todo;
 import com.todo.datamodels.TodoFolder;
 import com.todo.properties.MSSqlServerProps;
 
@@ -65,8 +66,30 @@ public class SQLServerManager {
         return idDeleted;
     }
 
-    public void fetchTodos(int folderID){
+    public List<Todo> fetchTodos(int folderID) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        List<Todo> todos = new ArrayList<>();
+        int INDEX = 0;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.FETCH_TODOS)){
+                ps.setInt(++INDEX, folderID);
 
+                try(ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()){
+                        todos.add(new Todo(){{
+                            setID(rs.getInt("ID"));
+                            setNAME(rs.getString("NAME"));
+                            setDESCRIPTION(rs.getString("DESCRIPTION"));
+                            setFOLDER_ID(rs.getInt("FOLDER_ID"));
+                            setCREATED_ON(rs.getTimestamp("CREATED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
+                            setMODIFIED_ON(rs.getTimestamp("MODIFIED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
+                        }});
+                    }
+                }
+            }
+        }
+
+        return todos;
     }
 
 }

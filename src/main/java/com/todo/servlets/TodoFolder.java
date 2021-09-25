@@ -37,7 +37,6 @@ public class TodoFolder extends HttpServlet {
             mapper.registerModule(new JavaTimeModule());
             mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-            var test = mapper.writeValueAsString(folders);
             out.println(mapper.writeValueAsString(folders));
 
         } catch (ClassNotFoundException e) {

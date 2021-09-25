@@ -70,7 +70,7 @@
                             options.url = '/todo-app/todo'
                             options.method = 'GET'
                             options.data =  'folder-id=' + folder.id,
-                            options.callbackMethod = loadFolders
+                            options.callbackMethod = loadTodoSuccess
 
                             sendRequest(options)
                         })
@@ -79,6 +79,18 @@
 
                     dashboardStage.append(dashboardStageRow)
                     $('.stage').append(dashboard)
+                }
+            }
+        }
+
+        function loadTodoSuccess(data){
+            if(data !== "" || data !== undefined){
+                let todos = JSON.parse(data)
+
+                if(todos.length == 0){
+                    // show no folders illustration
+                    $('.stage').empty()
+                    $('.stage').append($('template#no-todo-wrapper').html())
                 }
             }
         }
@@ -186,9 +198,9 @@
     </template>
     <template id="no-todo-wrapper">
         <div class="text-center no-todo-wrapper">
-            <img src="assets/empty.svg">
-            <h3>No TODO folder found.</h3>
-            <button class="btn btn-primary" onclick="createFolder()">Create folder</button>
+            <img src="assets/todos.svg">
+            <h3>No TODO's found.</h3>
+            <button class="btn btn-primary" onclick="createFolder()">Create TODO</button>
         </div>
     </template>
     <template id="todo-folder-dashboard">
