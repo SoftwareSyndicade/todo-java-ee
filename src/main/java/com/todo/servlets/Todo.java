@@ -112,6 +112,35 @@ public class Todo extends HttpServlet {
         out.println(isDeleted);
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var parameters = getParameters(req);
+        boolean isComplete = false;
+        int todoID = Integer.parseInt(parameters.get("todo-id"));
+        int folderID = Integer.parseInt(parameters.get("folder-id"));
+        SQLServerManager manager = new SQLServerManager();
+
+        try {
+            manager.completeTodo(todoID,folderID);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        PrintWriter out = resp.getWriter();
+        out.println(isComplete);
+
+    }
+
     private Map<String, String> getParameters(HttpServletRequest request)
     {
         Map<String, String> parametersMap = new HashMap<>();

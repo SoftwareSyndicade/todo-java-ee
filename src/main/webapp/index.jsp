@@ -111,8 +111,25 @@
                         let todoUI = $($('template#todo').html()).clone()
                         if(todo.is_COMPLETE){
                             todoUI.addClass('complete')
-                            todoUI.find('#todo-chk').prop('checked', true)
+                            todoUI.find('#todo-chk').prop({
+                                'checked': 'true,',
+                                'disabled': 'true'
+                            })
+
                         }
+
+                        if(!todo.is_COMPLETE){
+                            todoUI.find('#todo-chk').click(function (){
+                                let options = {}
+                                options.url = '/todo-app/todo'
+                                options.method = 'PUT'
+                                options.data =  'todo-id=' + todo.id + "&folder-id=" + selectedFolder
+                                options.callbackMethod = loadTodos
+
+                                sendRequest(options)
+                            })
+                        }
+
                         todoUI.find('#todo-name').text(todo.name).addClass(todo.is_COMPLETE ? 'txt-strikethrough' : '')
                         todoUI.find('#todo-description').text(todo.description)
                         todoUI.find('.todo-trash-icon').click(function (){
@@ -362,7 +379,7 @@
         <div class="container-fluid todo">
             <div class="row">
                 <div class="todo-checkbox">
-                    <input type="checkbox" id="todo-chk">
+                    <input type="checkbox" class="form-check-label" id="todo-chk">
                 </div>
                 <div class="col padding1015">
                     <h5 class="m-0" id="todo-name">Todo name</h5>

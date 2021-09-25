@@ -10,4 +10,5 @@ public class SQLQueries {
     public static final String FETCH_TODOS = "SELECT [ID],[NAME],[DESCRIPTION],[CREATED_ON],[MODIFIED_ON], [FOLDER_ID],[IS_COMPLETE] FROM TODOS WHERE FOLDER_ID = ?";
     public static final String INSERT_TODO = "INSERT INTO TODOS(NAME, DESCRIPTION, CREATED_ON, MODIFIED_ON, FOLDER_ID) VALUES(?,?,?,?,?)";
     public static final String DELETE_TODO = "DELETE FROM TODOS WHERE ID = ? AND FOLDER_ID = ?";
+    public static final String COMPLETE_TODO = "UPDATE TODOS SET IS_COMPLETE = ? WHERE ID = ? and FOLDER_ID = ?";
 }
