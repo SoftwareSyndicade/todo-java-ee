@@ -200,7 +200,7 @@
         <div class="text-center no-todo-wrapper">
             <img src="assets/todos.svg">
             <h3>No TODO's found.</h3>
-            <button class="btn btn-primary" onclick="createFolder()">Create TODO</button>
+            <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
         </div>
     </template>
     <template id="todo-folder-dashboard">
@@ -251,6 +251,11 @@
                 <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
                 <hr/>
             </div>
+            <div class="container-fluid dashboard-stage">
+                <div class="row" style="max-width: 800px">
+
+                </div>
+            </div>
         </div>
     </template>
     <template id="create-todo">
@@ -268,11 +273,24 @@
                     <textarea type="text" class="form-control" id="txt-TODO-description" name="txt-folder-description"></textarea>
                 </div>
                 <div class="col-12 text-end p-2">
-                    <button class="btn" type="button" onclick="loadTODOs()">Cancel</button>
-                    <button class="btn btn-primary" type="button" onclick="saveFolder()">Save</button>
+                    <button class="btn" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="button">Save</button>
                 </div>
             </div>
         </form>
+    </template>
+    <template id="todo">
+        <div class="container-fluid todo">
+            <div class="row">
+                <div class="todo-checkbox">
+                    <input type="checkbox">
+                </div>
+                <div class="col padding1015">
+                    <h5 class="m-0" id="todo-name">Todo name</h5>
+                    <label class="small" id="todo-description">Description here</label>
+                </div>
+            </div>
+        </div>
     </template>
 </body>
 </html>
