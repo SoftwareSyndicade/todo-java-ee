@@ -261,6 +261,9 @@
             <img src="assets/todos.svg">
             <h3>No TODO's found.</h3>
             <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
+            <div class="mt-2">
+                <button class="btn" onclick="loadFolders()">View folders</button>
+            </div>
         </div>
     </template>
     <template id="todo-folder-dashboard">
@@ -307,7 +310,8 @@
     </template>
     <template id="todo-dashboard">
         <div class="todo-dashboard">
-            <div class="text-end">
+            <div class="text-end" style="position: relative">
+                <img src="assets/arrow-left.svg" onclick="loadFolders()" class="back-button">
                 <button class="btn btn-primary" onclick="createTODO()">Create TODO</button>
                 <hr/>
             </div>

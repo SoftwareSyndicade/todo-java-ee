@@ -80,3 +80,13 @@
     transform: translate(-50%, -50%);
     cursor: pointer
 }
+
+.back-button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer
+}
