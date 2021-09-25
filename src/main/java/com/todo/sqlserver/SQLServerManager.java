@@ -136,4 +136,19 @@ public class SQLServerManager {
         return isSaved;
     }
 
+    public boolean deleteTodo(int todoID, int folderID) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        boolean isDeleted = false;
+        int INDEX = 0;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.DELETE_TODO)){
+                ps.setInt(++INDEX, todoID);
+                ps.setInt(++INDEX, folderID);
+
+                isDeleted = ps.executeUpdate() > 0;
+            }
+        }
+        return isDeleted;
+    }
+
 }

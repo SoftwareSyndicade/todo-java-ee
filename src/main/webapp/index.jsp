@@ -84,8 +84,8 @@
             let options = {}
             options.url = '/todo-app/todo'
             options.method = 'GET'
-            options.data =  'folder-id=' + selectedFolder,
-                options.callbackMethod = loadTodoSuccess
+            options.data =  'folder-id=' + selectedFolder
+            options.callbackMethod = loadTodoSuccess
 
             sendRequest(options)
         }
@@ -112,6 +112,15 @@
 
                         todoUI.find('#todo-name').text(todo.name)
                         todoUI.find('#todo-description').text(todo.description)
+                        todoUI.find('.todo-trash-icon').click(function (){
+                            let options = {}
+                            options.url = '/todo-app/todo'
+                            options.method = 'DELETE'
+                            options.data =  'todo-id=' + todo.id + "&folder-id=" + selectedFolder
+                            options.callbackMethod = loadTodos
+
+                            sendRequest(options)
+                        })
                         dashboardStageRow.append(todoUI)
                     })
 
