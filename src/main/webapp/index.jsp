@@ -53,7 +53,7 @@
                     $(folders).each(function (index, folder){
                         let todoFolder = $($('template#todo-folder').html()).clone();
 
-                        let updateDays = folder.update_DAYS == 0 ? "Today" : folder.update_DAYS + " ago";
+                        let updateDays = folder.update_DAYS == 0 ? "Today" : folder.update_DAYS  == 1 ? + folder.update_DAYS + " day ago" : folder.update_DAYS + " days ago";
 
                         todoFolder.find('#lbl-update-days').text('Updated: ' + updateDays)
                         todoFolder.find('#folder-name').text(folder.name)
